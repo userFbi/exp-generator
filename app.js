@@ -1,25 +1,30 @@
 var createError = require('http-errors');
 var express = require('express');
-var app = express();
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
+// var indexRouter = require('./routes/index');
+// var usersRouter = require('./routes/users');
+
+var app = express();
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/')
+mongoose.connect('mongodb://localhost:27017/admin')
   .then(() => {
-    console.log("connection success");
+    console.log('connected successfully')
   })
   .catch((error) => {
-    console.log("not");
+    console.log(error)
   })
 
 let UC = require('./controller/user')
 
-
 app.get('/', UC.viewPage)
+app.get('/createData', UC.createData)
+app.get('/deleteData/:deleteId', UC.deleteData)
+app.get('/editData/:editId', UC.editData)
+// app.get('/updateData', UC.updateData)
 
-
-var usersRouter = require('./routes/users');
 
 
 // view engine setup
@@ -32,8 +37,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', usersRouter);
-app.use('/users', usersRouter);
+// app.use('/', indexRouter);
+// app.use('/', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

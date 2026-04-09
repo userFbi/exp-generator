@@ -1,28 +1,35 @@
 <form action="/createData">
-    name = <input type="text" name="name"> <br><br>
-    surname = <input type="text" name="surname"> <br><br>
+    name = <input type="text" name="name" value="<%= editData ? editData.name : '' %> "> <br><br>
+    age = <input type="number" name="age" value="<%= editData ? editData.age  : '' %>">
+    <br><br>
     <button type="submit">Submit</button>
 </form>
+
 <table border="1">
     <tr>
-        <th>Name</th>
-        <th>Surname</th>
-        <th>Delete</th>
-        <th>Edit</th>
+        <td>Name</td>
+        <td>Age</td>
+        <td>DELETE</td>
+        <td>UPDATE</td>
     </tr>
-    <% data.map((i,index)=> { %>
+    <% user.map((i , index)=> {
+        %>
         <tr>
             <td>
                 <%= i.name %>
             </td>
             <td>
-                <%= i.surname %>
+                <%= i.age %>
             </td>
             <td>
-                <button><a href="/deleteData/<%= index %>">Delete</a></button>
+                <button>
+                    <a href="/deleteData/<%= i._id %>">DELETE</a>
+                </button>
             </td>
             <td>
-                <button><a href="/updateData/<%= index %>">Edit</a></button>
+                <button>
+                    <a href="/editData/<%= i._id %> %>">UPDATE</a>
+                </button>
             </td>
         </tr>
         <% }) %>
