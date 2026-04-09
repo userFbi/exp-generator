@@ -34,28 +34,21 @@
     })
     module.exports = mongoose.model('collection name what you want', userSchema)
 
-5. call & run :
-- call the controller file you created & store it in variable :
-    let UC = require('./controller/user')
-
-- call them in app.js:
-    app.get('/', UC.viewPage)
-    app.get('/createData', UC.createData)
-    app.get('/deleteData/:deleteId', UC.deleteData)
-    app.get('/editData/:editId', UC.editData)    
-
-extra : 
-- routes of file if need :
+5. create routes & export it : 
+- create routes :
     var express = require('express');
     var router = express.Router();
     const USER = require('../models/user');
+    let UC = require('../controller/user')
 
-    /* GET users listing. */
-    router.get('/', async (req, res) => {
-
-        const data = await USER.find()
-  
-        res.render('user.ejs', { user : data });
-    });
+    router.get('/', UC.viewPage)
+    router.get('/createData', UC.createData)
+    router.get('/deleteData/:deleteId', UC.deleteData)
+    router.get('/editData/:editId', UC.editData)
 
     module.exports = router;
+
+
+6. call & run :
+    var usersRouter = require('./routes/users');
+    app.use('/', usersRouter);
